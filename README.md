@@ -1,100 +1,97 @@
-# 免责声明🧐
-本工具仅面向 **合法授权** 的企业安全建设行为，如您需要测试本工具的可用性，请自行搭建靶机环境。
 
-在使用本工具进行检测时，您应确保该行为符合当地的法律法规，并且已经取得了足够的授权。**请勿对非授权目标进行扫描**。
+# nps
+![](https://img.shields.io/github/stars/dreamskr/nps.svg)   ![](https://img.shields.io/github/forks/dreamskr/nps.svg)
+[![Gitter](https://badges.gitter.im/cnlh-nps/community.svg)](https://gitter.im/cnlh-nps/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+![Release](https://github.com/dreamskr/nps/workflows/Release/badge.svg)
+![GitHub All Releases](https://img.shields.io/github/downloads/dreamskr/nps/total)
 
-如您在使用本工具的过程中存在任何非法行为，您需自行承担相应后果，我们将不承担任何法律及连带责任。
+[README](https://github.com/dreamskr/nps/blob/master/README_EN.md)|[中文文档](https://github.com/dreamskr/nps/blob/master/README.md)
 
-在安装并使用本工具前，**请您务必审慎阅读**、充分理解各条款内容，限制、免责条款或者其他涉及您重大权益的条款可能会以加粗、加下划线等形式提示您重点注意。 除非您已充分阅读、完全理解并接受本协议所有条款，否则，请您不要安装并使用本工具。您的使用行为或者您以其他任何明示或者默示方式表示接受本协议的，即视为您已阅读并同意本协议的约束。
-
-# 工具来源及其说明
-```
-（1）nps通信流量比较稳定，但特征抓的比较死，所以基于原版的nps进行二次开发
-```
-### 说明
-为了工具的免杀性及其后期修改，本人不公开源码。 **本人承诺，工具无毒，只能简单进行二开**
-
-# 魔改部分
-
-```
-（1）重写了nps的认证过程，通信过程均进行加密
-（2）重些了npc的部分，预计后续分离config文件进行加载
-（3）进行了nps未授权漏洞的修复，避免了默认配置未授权
-```
+nps是一款轻量级、高性能、功能强大的**内网穿透**代理服务器。目前支持**tcp、udp流量转发**，可支持任何**tcp、udp**上层协议（访问内网网站、本地支付接口调试、ssh访问、远程桌面，内网dns解析等等……），此外还**支持内网http代理、内网socks5代理**、**p2p等**，并带有功能强大的web管理端。
 
 
+## 一、背景
+![image](https://github.com/dreamskr/nps/blob/master/image/web.png?raw=true)
 
-# 免杀情况
-（这是魔改后的demo上去的，还请各位测试切莫进行☁️测试、沙箱测试、联网测试）
-### 魔改后流量
-魔改后的工具流量就不进行抓取了，需要的话，大家可以自行进行测试。
+1. 做微信公众号开发、小程序开发等----> 域名代理模式
 
+2. 想在外网通过ssh连接内网的机器，做云服务器到内网服务器端口的映射，----> tcp代理模式
 
-### 某社区☁️沙箱（demo版测试）
-<img width="1244" alt="image" src="./images/image-20230521162635386.png">
+3. 在非内网环境下使用内网dns，或者需要通过udp访问内网机器等----> udp代理模式
 
-### virustotal
-<img width="1244" alt="image" src="./images/image-20230521141510009.png">
+4. 在外网使用HTTP代理访问内网站点----> http代理模式
 
-### windows defender（静态）
-<img width="1154" alt="image" src="./images/image-20230521141351320.png">
+5. 搭建一个内网穿透ss，在外网如同使用内网vpn一样访问内网资源或者设备----> socks5代理模式
+## 二、特点
+- 协议支持全面，兼容几乎所有常用协议，例如tcp、udp、http(s)、socks5、p2p、http代理...
+- 全平台兼容(linux、windows、macos、群辉、OpenWrt等)，支持一键安装为系统服务
+- 控制全面，同时支持服务端和客户端控制
+- https集成，支持将后端代理和web服务转成https，同时支持多证书
+- 操作简单，只需简单的配置即可在web ui上完成其余操作
+- 展示信息全面，流量、系统信息、即时带宽、客户端版本等
+- 扩展功能强大，该有的都有了（缓存、压缩、加密、流量限制、带宽限制、端口复用等等）
+- 域名解析具备自定义header、404页面配置、host修改、站点保护、URL路由、泛解析等功能
+- 服务端支持多用户和用户注册功能
 
-### windows defender（动态）
-<img width="1492" alt="image" src="./images/image-20230521141429304.png">
+**没找到你想要的功能？不要紧，点击[进入文档](https://dreamskr.github.io/nps)查找吧**
+## 三、快速开始
 
+#### 1.安装
+> [actions](https://github.com/dreamskr/nps/actions)通过奶牛快传和坚果云下载
 
-### 360、火绒等其他杀软未进行测试
+下载对应的系统版本即可，服务端和客户端是单独的
 
+#### 2.服务端启动
+下载完服务器压缩包后，解压，然后进入解压后的文件夹
 
-# 项目使用
-未进行测试nps服务端的注册，所以目前主要还是 ./nps的方式来运行
-## 服务端使用
-<img width="802" alt="image" src="./images/image-20230521141541183.png">
+- 执行安装命令
+	* 对于linux|darwin ```sudo ./nps install```
+	* 对于windows，管理员身份运行cmd，进入安装目录 ```nps.exe install```
 
+- 默认端口
+	* nps默认配置文件使用了80，443，9000，9001端口
+	* 80与443端口为域名解析模式默认端口,默认关闭
+	* 9000为web管理访问端口
+	* 9001为网桥端口，用于客户端与服务器通信
 
-## 客户端使用
+- 启动
+	* 对于linux|darwin ```sudo nps start```
+	* 对于windows，管理员身份运行cmd，进入程序目录 ```nps.exe start```
 
-### 配置文件启动
-配置文件如下：
-```
-[common]
-server_addr=127.0.0.1:8024
-conn_type=tcp
-vkey=123456
-auto_reconnection=true
-max_conn=1000
-flow_limit=1000
-rate_limit=1000
-web_username=admin
-web_password=123
-crypt=true
-compress=true
-#pprof_addr=0.0.0.0:9999
-disconnect_timeout=60
+- 注意
+	* 安装后windows配置文件位于当前目录，linux和darwin位于```/etc/nps```目录
+	* nps支持以下命令参数：```start,stop,restart,install,uninstall```
+	* 如果发现没有启动成功，查看日志(Windows日志文件位于当前运行目录下，linux和darwin位于/var/log/nps.log)
 
-```
+#### 3.客户端连接
+- 仅运行客户
+	* 点击web管理中客户端前的+号，复制**客户端运行命令**的命令行
+	* 执行命令，linux直接执行即可，windows将./npc换成npc.exe用cmd执行
 
-<img width="768" alt="image" src="./images/image-20230521141600000.png">
+- 注册到系统服务
+	* 点击web管理中客户端前的+号，复制**注册到系统服务**的命令行
+	* 执行命令，linux直接执行即可，windows将./npc换成npc.exe用cmd执行
+	* 执行```npc start```即可
+	* npc支持以下命令参数：```start,stop,restart,install,uninstall```
 
-### 命令行启动
-<img width="787" alt="image" src="./images/image-20230521141615884.png">
+#### 4.配置
+- 客户端连接后，在web中配置对应穿透服务即可
+- 更多高级用法见[完整文档](https://dreamskr.github.io/nps)
 
+## 四、贡献
+- 如果遇到bug可以直接提交至dev分支
+- 使用遇到问题可以通过issues反馈
+- 项目处于开发阶段，还有很多待完善的地方，如果可以贡献代码，请提交 PR 至 dev 分支
+- 如果有新的功能特性反馈，可以通过issues或者qq群反馈
 
+## 五、更新日志(基于[ehang-io/nps](https://github.com/ehang-io/nps)的v0.26.10版本修改)
+- 1.调用新增修改客户端、隧道、域名的API，返回新增或修改后的记录json。
+- 2.修改默认日志级别为0。关闭默认http及https默认端口。修改默认端口为9000。默认打开允许本地代理。
+- 3.增加展开客户端时，显示安装或注册系统服务的命令。
+- 4.增加上传到奶牛快传及坚果云，每天编译一次。
+- 5.修改以服务方式安装nps和npc的服务名及显示名称（因特殊场景需要，改了服务名及名称，可Fork回去自行修改）。
+- 6.windows环境下，安装及读取当前目录的配置文件及web目录（原默认安装及读取配置目录为C:\Program Files）。
+- 7.管理域名和隧道时，客户端ID改成下拉列表选择。
 
-# 项目进度
-
-✅ 2023.5.19 重新写了通信认证协议
-
-✅ 2023.5.20 把连接流量进行混淆，仅仅支持客户端命令行启动，未支持conf文件启动
-
-✅ 2023.5.21 支持本地config文件加载
-
-# 后续增加
-   （1）~~增加config文件分离，实现远端拉取~~（估计很快）
-   
-   （2）~~实现其他流量的魔改~~
-# 参考
-```
-https://github.com/ehang-io/nps
-```
+![image](https://user-images.githubusercontent.com/43511466/204796815-c293e805-12f6-431e-a8f7-1d6b91dbbfc3.png)
 
