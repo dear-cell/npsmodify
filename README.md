@@ -95,3 +95,66 @@ nps是一款轻量级、高性能、功能强大的**内网穿透**代理服务�
 
 ![image](https://user-images.githubusercontent.com/43511466/204796815-c293e805-12f6-431e-a8f7-1d6b91dbbfc3.png)
 
+
+工具介绍
+https://blog.csdn.net/qq_40456839/article/details/132938726
+
+nps是渗透测试和红蓝攻防过程中常用的工具，通信流量比较稳定，但对流量特征抓的比较死，常常出现落地秒的情况，所以 @Q16G 师傅基于原版的nps进行二次开发。
+
+
+
+魔改部分
+重写了nps的认证过程，通信过程均进行加密
+重些了npc的部分，预计后续分离config文件进行加载
+进行了nps未授权漏洞的修复，避免了默认配置未授权
+支持config文件从远端进行加载，在传输过程中均实现流量加密
+编译工具
+cd cmd/nps
+sh windows.sh
+ 
+cd cmd/npc
+sh windows.sh
+ 
+需要修改账号密码请修改nps中的good.conf
+免杀情况
+这是魔改后的demo上去的，还请各位测试切莫进行☁️测试、沙箱测试、联网测试
+
+
+工具使用
+未进行测试nps服务端的注册，所以目前主要还是 ./nps的方式来运行
+
+服务端使用
+服务端使用注意事项
+
+在使用服务端的时候需要down下来 cmd/nps下的conf和web两个目录
+把conf和web两个目录和nps目录同级
+修改服务端密码（后期也许会支持md5、或者登陆后修改密码）最新版默认使用good.conf
+
+
+客户端使用
+配置文件启动
+
+[common]
+server_addr=127.0.0.1:8024
+conn_type=tcp
+vkey=123456
+auto_reconnection=true
+max_conn=1000
+flow_limit=1000
+rate_limit=1000
+web_username=admin
+web_password=123
+crypt=true
+compress=true
+#pprof_addr=0.0.0.0:9999
+disconnect_timeout=60
+图片
+
+命令行启动
+
+
+命令行以远端配置文件启动
+
+npc.exe -rconfig ServerConfig地址
+eg.
+npc.exe -rconfig 127.0.0.1:23123
